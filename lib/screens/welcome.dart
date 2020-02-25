@@ -1,9 +1,46 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:milk_delivery_system/screens/Login.dart';
+import 'package:milk_delivery_system/screens/home.dart';
 
-class IntroScreen extends StatelessWidget {
+class IntroScreen extends StatefulWidget {
+  IntroScreen({Key key}) : super(key: key);
+
+  @override
+  _IntroScreenState createState() => _IntroScreenState();
+}
+
+class _IntroScreenState extends State<IntroScreen> {
+  @override
+  void initState() {
+    FirebaseAuth.instance
+        .currentUser()
+        .then((currentUser) => {
+              if (currentUser == null)
+                {Navigator.pushReplacementNamed(context, "/login")}
+              else
+                {
+                  Firestore.instance
+                      .collection("users")
+                      .document(currentUser.uid)
+                      .get()
+                      .then((DocumentSnapshot result) =>
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Home(
+                                        uid: currentUser.uid,
+                                      ))))
+                      .catchError((err) => print(err))
+                }
+            })
+        .catchError((err) => print(err));
+    super.initState();
+  }
+
   final pageDecoration = PageDecoration(
     contentPadding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 10.0),
     titleTextStyle:

@@ -1,8 +1,27 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:milk_delivery_system/screens/home.dart';
 import 'package:milk_delivery_system/screens/signup.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
+  TextEditingController emailInputController;
+  TextEditingController passwordInputController;
+
+  @override
+  void initState() {
+    emailInputController = TextEditingController();
+    passwordInputController = TextEditingController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -43,6 +62,7 @@ class Login extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   TextField(
+                    controller: emailInputController,
                     decoration: InputDecoration(
                         labelText: 'EMAIL',
                         labelStyle: GoogleFonts.montserrat(
@@ -56,6 +76,7 @@ class Login extends StatelessWidget {
                     height: 20,
                   ),
                   TextField(
+                    controller: passwordInputController,
                     decoration: InputDecoration(
                         labelText: 'PASSWORD',
                         labelStyle: GoogleFonts.montserrat(
@@ -81,7 +102,29 @@ class Login extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             decoration: TextDecoration.underline),
                       ),
-                      onTap: null,
+                      onTap: () {
+                        if (_loginFormKey.currentState.validate()) {
+                          FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                                  email: emailInputController.text,
+                                  password: passwordInputController.text)
+                              .then((currentUser) => Firestore.instance
+                                  .collection("users")
+                                  .document(currentUser.user.uid)
+                                  .get()
+                                  .then((DocumentSnapshot result) =>
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Home(
+//                                                    userName: result["name"] +
+//                                                        "'s Tasks",
+                                                    uid: currentUser.user.uid,
+                                                  ))))
+                                  .catchError((err) => print(err)))
+                              .catchError((err) => print(err));
+                        }
+                      },
                     ),
                   ),
                   SizedBox(

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "36875339818",
+    "firebase_url": "https://milkdeliverysystem-3fccc.firebaseio.com",
+    "project_id": "milkdeliverysystem-3fccc",
+    "storage_bucket": "milkdeliverysystem-3fccc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36875339818:android:ba3eb7175a60cdc2fa9b53",
+        "android_client_info": {
+          "package_name": "com.codewithk.milk_delivery_system"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "36875339818-fikitaaakikflu8cdp1ucsb71f41odnm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4_YaI_XAxHoaWZO0BeQ9KNZsy1fru6KM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "36875339818-fikitaaakikflu8cdp1ucsb71f41odnm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
