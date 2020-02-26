@@ -140,7 +140,7 @@ class _SignupState extends State<Signup> {
                               if (_registerFormKey.currentState.validate()) {
                                 FirebaseAuth.instance
                                     .createUserWithEmailAndPassword(
-                                        email: emailInputController.text,
+                                        email: emailInputController.text.trim(),
                                         password: passwordInputController.text)
                                     .then((currentUser) => Firestore.instance
                                         .collection("users")
@@ -148,7 +148,7 @@ class _SignupState extends State<Signup> {
                                         .setData({
                                           "uid": currentUser.user.uid,
                                           "name": nameInputController.text,
-                                          "email": emailInputController.text,
+                                          "email": emailInputController.text.trim(),
                                         })
                                         .then((result) => {
                                               Navigator.pushAndRemoveUntil(

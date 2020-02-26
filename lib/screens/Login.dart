@@ -106,7 +106,7 @@ class _LoginState extends State<Login> {
                         if (_loginFormKey.currentState.validate()) {
                           FirebaseAuth.instance
                               .signInWithEmailAndPassword(
-                                  email: emailInputController.text,
+                                  email: emailInputController.text.trim(),
                                   password: passwordInputController.text)
                               .then((currentUser) => Firestore.instance
                                   .collection("users")
